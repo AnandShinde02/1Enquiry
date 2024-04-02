@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default axios.create({
-  baseURL: 'https://cod3red.somee.com/',
+  baseURL: 'https://localhost:44349/',
   headers: {
     'Content-type': 'application/json',
     'Access-Control-Allow-Origin': '*'

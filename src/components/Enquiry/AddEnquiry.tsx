@@ -168,12 +168,13 @@ const AddEnquiry = () => {
     return (
         <Container>
             <Grid container direction="column" alignItems="center" justifyContent="center">
-                <Grid container spacing={2}>
+                <Grid container spacing={1}>
                     <Grid item xs={12}>
-                        <PageHeader heading={'Enquriy Form'} subheading={''} />
+                        <PageHeader heading={'Enquiry Form'} subheading={''} />
                     </Grid>
                     <Grid item xs={12}>
-                        <Dropdown ItemList={DesignationList} Label={'Class'} DefaultValue={DesignationId}
+                        <Dropdown ItemList={DesignationList} Label={'Class'} 
+                        DefaultValue={DesignationId}
                             ClickItem={clickDesignation} />
                     </Grid>
                     <Grid item xs={12}>
@@ -181,38 +182,39 @@ const AddEnquiry = () => {
                             ClickItem={clickEmployeeName}
                             ErrorMessage={EmployeeErrorMessage} />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={3}>
                         <CalendarField Item={BirthDate} Label={'Birth Date'}
                             ClickItem={clickBirthDate}
                             ErrorMessage={BirthDateErrorMessage} />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={3}>
                         <InputField Item={EmployeeName} Label={'Age'}
                             ClickItem={clickEmployeeName}
                             ErrorMessage={EmployeeErrorMessage} />
                     </Grid>
-                    <Grid item xs={12}>
-                        <RadioList ItemList={GenderList} Label={'Gender'} DefaultValue={Gender}
+                    <Grid item xs={3}>
+                        <RadioList ItemList={GenderList} Label={'Gender'} 
+                        DefaultValue={Gender}
                             ClickItem={clickGender}
                             ErrorMessage={GenderErrorMessage} />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={6}>
                         <InputField Item={EmployeeName} Label={'Father Name'}
                             ClickItem={clickEmployeeName}
                             ErrorMessage={EmployeeErrorMessage} />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={6}>
                         <InputField Item={PhoneNo} Label={'Father Phone No'}
                             ClickItem={clickPhoneNo} BlurItem={BlurPhoneNo}
                             ErrorMessage={PhoneNoErrorMessage}
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={6}>
                         <InputField Item={EmployeeName} Label={'Mother Name'}
                             ClickItem={clickEmployeeName}
                             ErrorMessage={EmployeeErrorMessage} />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={6}>
                         <InputField Item={PhoneNo} Label={'Mother Phone No'}
                             ClickItem={clickPhoneNo} BlurItem={BlurPhoneNo}
                             ErrorMessage={PhoneNoErrorMessage}
@@ -237,7 +239,7 @@ const AddEnquiry = () => {
                     
                     
                     <Grid item xs={12}>
-                        <ButtonField Label={'Submit'} ClickItem={clickSubmit} />
+                        <ButtonField Label={'Save'} ClickItem={clickSubmit} />
                     </Grid>
                 </Grid> <br />
                 <Divider />
