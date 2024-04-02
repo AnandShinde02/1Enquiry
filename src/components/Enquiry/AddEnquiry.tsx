@@ -12,13 +12,11 @@ import RadioList from "src/libraries/Training/RadioList"
 import PageHeader from "src/libraries/heading/PageHeader"
 // import EmployeeList from "./EmployeeList"
 
-import { IAddEmployeeBody, IGetEmployeeDetailsBody } from "src/interfaces/Employee/IEmployee"
-import {
-    AddEmployeeDetails, getDesignationList,
-    getEmployeeDetails,
-    getEmployeeList,
-    resetAddEmployeeDetails
-} from "src/requests/Employee/RequestEmployee"
+// import { IAddEmployeeBody,} from "src/interfaces/Employee/IEmployee"
+// import {
+//     AddEmployeeDetails, getDesignationList,
+//     resetAddEmployeeDetails
+// } from "src/requests/Employee/RequestEmployee"
 
 import { RootState } from 'src/store'
 import { IsEmailValid, IsPhoneNoValid, getCalendarFormat } from "../Common/Util"
@@ -27,117 +25,169 @@ import { IsEmailValid, IsPhoneNoValid, getCalendarFormat } from "../Common/Util"
 import { useNavigate } from 'react-router-dom'
 
 const AddEnquiry = () => {
+    const classList = [{ Id: 1, Name: "Play Group", Value: "1" },
+    { Id: 2, Name: "Nursery", Value: "2" },
+    { Id: 3, Name: "Jr. K.G", Value: "3" },
+    { Id: 4, Name: "Sr. K.G", Value: "4" },
+    { Id: 5, Name: "Day Care", Value: "5" }];
     const navigate = useNavigate();
 
 
     // const { Id } = useParams();
 
     const dispatch = useDispatch();
-
-    const [EmployeeName, setEmployeeName] = useState('')
+    const [classId, setClassId] = useState('0')
+    const [StudentName, setStudentName] = useState('')
     const [BirthDate, setBirthDate] = useState('')
-    const [EmailId, setEmailId] = useState('')
-    const [PhoneNo, setPhoneNo] = useState('');
+    const [Age, setAge] = useState('')
     const [GenderList, setGenderList] = useState([
         { Id: 1, Name: 'Male', Value: "1" },
         { Id: 2, Name: 'Female', Value: "2" }
     ])
     const [Gender, setGender] = useState('0')
-    const [DesignationId, setDesignationId] = useState('0')
+    const [FatherName, setFatherName] = useState('')
+    const [FPhoneNo, setFPhoneNo] = useState('');
+    const [MotherName, setMotherName] = useState('')
+    const [MPhoneNo, setMPhoneNo] = useState('');
+    const [Address, setAddress] = useState('')
+    const [SocietyName,setSocietyName] = useState('')
+    const [Email, setEmail] = useState('')
+
+
 
     const [EmployeeErrorMessage, setEmployeeErrorMessage] = useState('')
     const [BirthDateErrorMessage, setBirthDateErrorMessage] = useState('')
-    const [EmailIdErrorMessage, setEmailIdErrorMessage] = useState('')
-    const [PhoneNoErrorMessage, setPhoneNoErrorMessage] = useState('')
+    const [FPhoneNoErrorMessage, setFPhoneNoErrorMessage] = useState('')
+    const [MPhoneNoErrorMessage, setMPhoneNoErrorMessage] = useState('')
+    const [EmailErrorMessage, setEmailErrorMessage] = useState('')
     const [GenderErrorMessage, setGenderErrorMessage] = useState('')
     const [Id, setId] = useState('')
+
 
     const DesignationList = useSelector((state: RootState) => state.Employee.DesignationList);
     const AddEmployeeMsg = useSelector((state: RootState) => state.Employee.AddEmployeeMsg);
     const EmployeeDetails = useSelector((state: RootState) => state.Employee.EmployeeDetails);
 
+
     const ClearFormFields = () => {
-        setEmployeeName('')
+        setClassId('0')
+        setStudentName('')
         setBirthDate('')
-        setEmailId('')
-        setPhoneNo('')
+        setAge('')
         setGender('')
-        setDesignationId('0')
+        setFatherName('')
+        setFPhoneNo('')
+        setMotherName('')
+        setMPhoneNo('')
+        setAddress('')
+        setSocietyName('')
+        setEmail('')
+        
     }
 
     useEffect(() => {
         if (EmployeeDetails != null) {
-            setEmployeeName(EmployeeDetails.EmployeeName)
+            setClassId(EmployeeDetails.classId)
+            setStudentName(EmployeeDetails.StudentName)
             setBirthDate(getCalendarFormat(EmployeeDetails.BirthDate))
+            setAge(EmployeeDetails.Age)
             setGender(EmployeeDetails.Gender)
-            setPhoneNo(EmployeeDetails.PhoneNo)
-            setDesignationId(EmployeeDetails.DesignationId)
-            setEmailId(EmployeeDetails.EmailId)
+            setFatherName(EmployeeDetails.FatherName)
+            setFPhoneNo(EmployeeDetails.FPhoneNo)
+            setMotherName(EmployeeDetails.MotherName)
+            setMPhoneNo(EmployeeDetails.MPhoneNo)
+            setAddress(EmployeeDetails.Address)
+            setSocietyName(EmployeeDetails.SocietyName)
+            setEmail(EmployeeDetails.Email)
         }
     }, [EmployeeDetails])
 
-    useEffect(() => {
-        dispatch(getDesignationList())
-        const GetEmployeeDetailsBody: IGetEmployeeDetailsBody = {
-            ID: Number(Id)
-        }
-        dispatch(getEmployeeDetails(GetEmployeeDetailsBody))
+    // useEffect(() => {
+    //     dispatch(getDesignationList())
+    //     const GetEmployeeDetailsBody: IGetEmployeeDetailsBody = {
+    //         ID: Number(Id)
+    //     }
+    //     dispatch(getEmployeeDetails(GetEmployeeDetailsBody))
 
-    }, [Id])
+    // }, [Id])
 
 
-    useEffect(() => {
-        if (AddEmployeeMsg != "") {
-            toast.success(AddEmployeeMsg)
-            dispatch(resetAddEmployeeDetails())
-            ClearFormFields();
-            // navigate("../../EmployeeList")
-            dispatch(getEmployeeList())
-        }
-    }, [AddEmployeeMsg])
-
-    const clickEmployeeName = (value) => {
-        setEmployeeName(value)
+    // useEffect(() => {
+    //     if (AddEmployeeMsg != "") {
+    //         toast.success(AddEmployeeMsg)
+    //         dispatch(resetAddEmployeeDetails())
+    //         ClearFormFields();
+    //         // navigate("../../EmployeeList")
+    //         dispatch(getEmployeeList())
+    //     }
+    // }, [AddEmployeeMsg])
+    const clickclassId = (value) => {
+        setClassId(value)
     }
-    const clickEmployee = (value) => {
-        setId(value)
+    const clickStudentName = (value) => {
+        setStudentName(value)
+    }
+    const clickFatherName = (value) => {
+        setFatherName(value)
+    }
+    const clickFPhoneNo = (value) => {
+        // true if its a number, false if not & cannot enter more than 10 digit
+        if (!isNaN(+value) && value.length < 11)
+            setFPhoneNo(value)
+    }
+    const clickMotherName = (value) => {
+        setMotherName(value)
+    }
+    const clickMPhoneNo = (value) => {
+        // true if its a number, false if not & cannot enter more than 10 digit
+        if (!isNaN(+value) && value.length < 11)
+            setMPhoneNo(value)
+    }
+    const clickAddress=(value) =>{
+        setAddress(value)
+    }
+    const clickSocietyName=(value) =>{
+        setSocietyName(value)
     }
     const clickBirthDate = (value) => {
         setBirthDate(value)
     }
-    const clickDesignation = (value) => {
-        setDesignationId(value)
+    const clickClassId = (value) => {
+        setClassId(value)
     }
-    const clickEmailId = (value) => {
-        setEmailId(value)
+    const clickEmail = (value) => {
+        setEmail(value)
     }
     const clickGender = (value) => {
         setGender(value)
     }
-    const clickPhoneNo = (value) => {
-        // true if its a number, false if not & cannot enter more than 10 digit
-        if (!isNaN(+value) && value.length < 11)
-            setPhoneNo(value)
+
+    const BlurEmail = () => {
+        setEmailErrorMessage(IsEmailValid(Email))
     }
-    const BlurEmailId = () => {
-        setEmailIdErrorMessage(IsEmailValid(EmailId))
+    const BlurFPhoneNo = () => {
+        setFPhoneNoErrorMessage(IsPhoneNoValid(FPhoneNo))
     }
-    const BlurPhoneNo = () => {
-        setPhoneNoErrorMessage(IsPhoneNoValid(PhoneNo))
+    const BlurMPhoneNo = () => {
+        setMPhoneNoErrorMessage(IsPhoneNoValid(MPhoneNo))
     }
 
     const IsFormValid = () => {
         let returnVal = true
-        if (EmployeeName == "") {
+        if (StudentName == "") {
             setEmployeeErrorMessage("Field is mandatory")
             returnVal = false
         }
-        if (EmailIdErrorMessage != "" && EmailId == "") {
-            setEmailIdErrorMessage("Field is mandatory")
+        if (EmailErrorMessage != "" && Email == "") {
+            setEmailErrorMessage("Field is mandatory")
             returnVal = false
         }
-        if (PhoneNoErrorMessage != "" && PhoneNo == "") {
-            setPhoneNoErrorMessage("Field is mandatory")
+        if (FPhoneNoErrorMessage != "" && FPhoneNo == "") {
+            setFPhoneNoErrorMessage("Field is mandatory")
+            returnVal = false
+        }
+        if (MPhoneNoErrorMessage != "" && MPhoneNo == "") {
+            setMPhoneNoErrorMessage("Field is mandatory")
             returnVal = false
         }
         if (Gender == "0") {
@@ -150,20 +200,24 @@ const AddEnquiry = () => {
         }
         return returnVal
     }
-    const clickSubmit = () => {
-        if (IsFormValid()) {
-            const AddEmployeeBody: IAddEmployeeBody = {
-                ID: Id == undefined ? 0 : Number(Id),
-                EmployeeName: EmployeeName,
-                BirthDate: BirthDate,
-                DesignationId: Number(DesignationId),
-                Gender: Number(Gender),
-                EmailId: EmailId,
-                PhoneNo: PhoneNo,
-            }
-            dispatch(AddEmployeeDetails(AddEmployeeBody))
-        }
-    }
+    // const clickSubmit = () => {
+    //     if (IsFormValid()) {
+    //         const AddEmployeeBody: IAddEmployeeBody = {
+    //             ID: Id == undefined ? 0 : Number(Id),
+    //             StudentName: StudentName,
+                    // FatherName: FatherName,
+                    // MotherName: MotherName,
+                    // Address:Address,
+                    //SocietyName:SocietyName
+    //             BirthDate: BirthDate,
+    //             DesignationId: Number(DesignationId),
+    //             Gender: Number(Gender),
+    //             Email: Email,
+    //             PhoneNo: PhoneNo,
+    //         }
+    //         // dispatch(AddEmployeeDetails(AddEmployeeBody))
+    //     }
+    // }
 
     return (
         <Container>
@@ -173,13 +227,13 @@ const AddEnquiry = () => {
                         <PageHeader heading={'Enquiry Form'} subheading={''} />
                     </Grid>
                     <Grid item xs={12}>
-                        <Dropdown ItemList={DesignationList} Label={'Class'} 
-                        DefaultValue={DesignationId}
-                            ClickItem={clickDesignation} />
+                        <Dropdown ItemList={classList} Label={'Class'} 
+                        DefaultValue={classId}
+                            ClickItem={clickClassId} />
                     </Grid>
                     <Grid item xs={12}>
-                        <InputField Item={EmployeeName} Label={'Student Name'}
-                            ClickItem={clickEmployeeName}
+                        <InputField Item={StudentName} Label={'Student Name'}
+                            ClickItem={clickStudentName}
                             ErrorMessage={EmployeeErrorMessage} />
                     </Grid>
                     <Grid item xs={3}>
@@ -188,8 +242,8 @@ const AddEnquiry = () => {
                             ErrorMessage={BirthDateErrorMessage} />
                     </Grid>
                     <Grid item xs={3}>
-                        <InputField Item={EmployeeName} Label={'Age'}
-                            ClickItem={clickEmployeeName}
+                        <InputField Item={StudentName} Label={'Age'}
+                            ClickItem={clickStudentName}
                             ErrorMessage={EmployeeErrorMessage} />
                     </Grid>
                     <Grid item xs={3}>
@@ -199,47 +253,47 @@ const AddEnquiry = () => {
                             ErrorMessage={GenderErrorMessage} />
                     </Grid>
                     <Grid item xs={6}>
-                        <InputField Item={EmployeeName} Label={'Father Name'}
-                            ClickItem={clickEmployeeName}
+                        <InputField Item={FatherName} Label={'Father Name'}
+                            ClickItem={clickFatherName}
                             ErrorMessage={EmployeeErrorMessage} />
                     </Grid>
                     <Grid item xs={6}>
-                        <InputField Item={PhoneNo} Label={'Father Phone No'}
-                            ClickItem={clickPhoneNo} BlurItem={BlurPhoneNo}
-                            ErrorMessage={PhoneNoErrorMessage}
+                        <InputField Item={FPhoneNo} Label={'Father Phone No'}
+                            ClickItem={clickFPhoneNo} BlurItem={BlurFPhoneNo}
+                            ErrorMessage={FPhoneNoErrorMessage}
                         />
                     </Grid>
                     <Grid item xs={6}>
-                        <InputField Item={EmployeeName} Label={'Mother Name'}
-                            ClickItem={clickEmployeeName}
+                        <InputField Item={MotherName} Label={'Mother Name'}
+                            ClickItem={clickMotherName}
                             ErrorMessage={EmployeeErrorMessage} />
                     </Grid>
                     <Grid item xs={6}>
-                        <InputField Item={PhoneNo} Label={'Mother Phone No'}
-                            ClickItem={clickPhoneNo} BlurItem={BlurPhoneNo}
-                            ErrorMessage={PhoneNoErrorMessage}
+                        <InputField Item={MPhoneNo} Label={'Mother Phone No'}
+                            ClickItem={clickMPhoneNo} BlurItem={BlurMPhoneNo}
+                            ErrorMessage={MPhoneNoErrorMessage}
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <InputField Item={EmployeeName} Label={'Address'}
-                            ClickItem={clickEmployeeName}
+                        <InputField Item={Address} Label={'Address'}
+                            ClickItem={clickAddress}
                             ErrorMessage={EmployeeErrorMessage} />
                     </Grid>
                     <Grid item xs={12}>
-                        <InputField Item={EmployeeName} Label={'Society Name'}
-                            ClickItem={clickEmployeeName}
+                        <InputField Item={SocietyName} Label={'Society Name'}
+                            ClickItem={clickSocietyName}
                             ErrorMessage={EmployeeErrorMessage} />
                     </Grid>
                     
                     <Grid item xs={12}>
-                        <InputField Item={EmailId} Label={'Email '}
-                            ClickItem={clickEmailId} BlurItem={BlurEmailId}
-                            ErrorMessage={EmailIdErrorMessage} />
+                        <InputField Item={Email} Label={'Email '}
+                            ClickItem={clickEmail} BlurItem={BlurEmail}
+                            ErrorMessage={EmailErrorMessage} />
                     </Grid>
                     
                     
                     <Grid item xs={12}>
-                        <ButtonField Label={'Save'} ClickItem={clickSubmit} />
+                        <ButtonField Label={'Save'} ClickItem={''} />
                     </Grid>
                 </Grid> <br />
                 <Divider />
