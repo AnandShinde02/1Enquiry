@@ -23,6 +23,9 @@ const EmployeeList = Loader(lazy(() =>
 const Home = Loader(
   lazy(() => import('src/components/Home/Home'))
 );
+const AddEnquiry = Loader(
+  lazy(() => import('src/components/Enquiry/AddEnquiry'))
+);
 
 const AuthenticationRoute = [
   {
@@ -52,6 +55,10 @@ const AuthenticationRoute = [
   {
     path: 'AddTask',
     element: <AddTask />
+  },
+  {
+    path: 'AddEnquiry',
+    element: <AddEnquiry />
   }
 ];
 
